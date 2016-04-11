@@ -33,6 +33,21 @@ void handle_run(TgBot::Bot& bot, TgBot::Message::Ptr msg)
 			output = "No output";
 		else
 			output = "Output:\n\n" + output;
+		
+		std::string output_utf8;
+		for(char c : output)
+		{
+			unsigned char uc = c;
+			if(c < 128)
+			{
+				output_utf8.push_back(c);
+			}
+			else
+			{
+				output_utf8.push_back(0b11000000 | (uc >> 6));
+				output_utf8.push_back(0b10000000 | (uc & 0b00111111));
+			}
+		}
 		bot.getApi().sendMessage(msg->chat->id, output);
 	}
 	else
