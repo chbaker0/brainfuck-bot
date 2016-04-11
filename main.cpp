@@ -38,7 +38,7 @@ void handle_run(TgBot::Bot& bot, TgBot::Message::Ptr msg)
 		for(char c : output)
 		{
 			unsigned char uc = c;
-			if(c < 128)
+			if(uc < 128)
 			{
 				output_utf8.push_back(c);
 			}
@@ -48,7 +48,7 @@ void handle_run(TgBot::Bot& bot, TgBot::Message::Ptr msg)
 				output_utf8.push_back(0b10000000 | (uc & 0b00111111));
 			}
 		}
-		bot.getApi().sendMessage(msg->chat->id, output);
+		bot.getApi().sendMessage(msg->chat->id, output_utf8);
 	}
 	else
 	{
