@@ -35,8 +35,11 @@ void handle_run(TgBot::Bot& bot, TgBot::Message::Ptr msg)
 			output = "Output:\n\n" + output;
 		
 		std::string output_utf8;
+		unsigned int i = 0;
 		for(char c : output)
 		{
+			if(i++ >= 256) break;
+			
 			unsigned char uc = c;
 			if(uc < 128)
 			{
